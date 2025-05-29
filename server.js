@@ -3,9 +3,13 @@ dotenv.config()
 import express from "express"
 import expressLayout from "express-ejs-layouts";
 import indexFile from "./backend/routes/index.js"
+import connectDB from "./backend/config/dbConnect.js"
 const PORT = 4000 || process.env.PORT
+ 
+connectDB();
 const app = express() ; 
 app.use(express.static('public'));
+
 
 app.use(expressLayout);
 app.set('layout' , './layouts/layout') ; 
