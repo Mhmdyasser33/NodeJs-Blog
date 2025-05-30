@@ -26,3 +26,17 @@ import postModel from "../models/Post.js";
         console.log(error);
     }
 }
+
+export const getPostById = async(req , res)=>{
+    try{
+        const { id } = req.params ; 
+        const data = await postModel.findById({_id : id}) ; 
+        const locals = {
+            title: data.title,
+            description: 'Simple Blog created with NodeJs, Express & MongoDB.'
+        }
+        res.render('post' , {locals,data}) ; 
+    }catch(error){
+     console.log(`Error in getting postInfo by id ${error}`)
+    }
+}
