@@ -16,7 +16,7 @@ import postModel from "../models/Post.js";
         const postsStoredInDb = await postModel.countDocuments();
         const nextPage = parseInt(page) + 1 ; // to show the next page
         const hasNextPage = nextPage <= Math.ceil(postsStoredInDb / postsPerPage);
-        res.render('index',
+        return res.render('index',
             {locals
             ,data,
             current : page , 
@@ -35,8 +35,37 @@ export const getPostById = async(req , res)=>{
             title: data.title,
             description: 'Simple Blog created with NodeJs, Express & MongoDB.'
         }
-        res.render('post' , {locals,data}) ; 
+        return res.render('post' , {locals,data}) ; 
     }catch(error){
      console.log(`Error in getting postInfo by id ${error}`)
+    }
+}
+
+export const searchPosts = async(req , res)=>{
+    try{
+        const locals = {
+            title: 'Search',
+            description: 'Simple Blog created with NodeJs, Express & MongoDB.'
+        }
+       const { searchTerm } = req.body;
+       const searchTermWithoutSpecialChar = searchTerm.replace(/[^a-zA-Z0-9]/g,'') ;
+       const data = await postModel.find({
+        $or : [
+               { 'title': new RegExp(searchTermWithoutSpecialChar, 'i') },
+               { 'body':  new RegExp(searchTermWithoutSpecialChar, 'i') },
+        ]
+       })
+       let noFoundPostMessage = '' 
+       if(data.length === 0){
+       noFoundPostMessage = `No results Found For ${searchTerm}`
+       }
+        return res.render('search', {
+            locals,
+            data,
+            noFoundPostMessage
+        })
+       
+    }catch(error){
+        console.log(error);
     }
 }

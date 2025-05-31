@@ -10,6 +10,8 @@ const PORT = 4000 || process.env.PORT
 
 connectDB();
 const app = express() ; 
+app.use(express.json()) // make server parsing and understanding data in json format and make it available in req.body
+app.use(express.urlencoded({ extended: true })) // to make server parsing and understanding data in urlencoded format and make it available in req.body
 app.use(express.static('public'));
 
 

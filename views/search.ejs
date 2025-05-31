@@ -1,0 +1,34 @@
+<div class="author">
+  <h1 class="author__heading">Search Results</h1>
+</div>
+
+<section class="articles">
+  <ul class="article-ul">
+    <% if (data.length===0) { %>
+
+        <h4 class="No__Found__Post__Message">
+          <%= noFoundPostMessage %>
+        </h4>
+    
+      <% } else { %>
+        <% data.forEach(post=> { %>
+          <li>
+            <a href="/post/<%= post._id %>">
+              <% if (post.title) { %>
+                <span>
+                  <%= post.title %>
+                </span>
+                <% } else { %>
+                  <span>
+                    <%= post.message %>
+                  </span>
+                  <% } %>
+                    <span class="article-list__date">
+                      <%= post.createdAt.toDateString() %>
+                    </span>
+            </a>
+          </li>
+          <% }) %>
+            <% } %>
+  </ul>
+</section>

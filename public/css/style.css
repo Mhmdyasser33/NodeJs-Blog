@@ -140,6 +140,7 @@ img {
   font-size: 1rem;
   font-weight: 600;
   color: var(--black);
+  cursor: pointer;
 }
 
 .header__button button:hover {
@@ -304,6 +305,7 @@ img {
   position: absolute;
   left: 0;
   right: 0;
+  
 }
 
 
@@ -336,4 +338,13 @@ img {
 
 .pagination:hover {
   color: var(--black);
+}
+
+#searchClose:hover{
+  cursor: pointer ;
+}
+.No__Found__Post__Message{
+  text-align: center;
+  opacity: .4;
+
 }
