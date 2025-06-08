@@ -16,7 +16,7 @@ export const adminInfo = async(req , res)=>{
 }
 export const loginHandler = async(req, res)=>{
     try{
-        const {username , password} = req.body ;
+        const { username , password } = req.body ;
         if(!username || !password) 
         return res.send('Please fill all the fields') ;
         const user = await userModel.findOne({username}) ;
@@ -44,6 +44,23 @@ export const registerHandler = async(req , res)=>{
      console.log(error) ; 
     }
 
+}
+
+export const displayRegisterPage = (req , res)=>{
+    try{
+        const locals = {
+           title : 'Register page',
+            description: 'Simple Blog created with NodeJs, Express & MongoDB.'
+        }
+
+        res.render('admin/register' , {
+            locals , 
+            layout : adminLayout
+        })
+        
+    }catch(error){
+     console.log(error);
+    }
 }
 export const dashboard = async (req, res) => {
    try{
@@ -91,4 +108,53 @@ export const addPostHandler = async(req , res)=>{
         console.log(error)
     }
 
+}
+
+export const displayUpdatePostPage = async(req , res)=>{
+    try{
+        const locals = {
+            title: 'Edit Post',
+            description: 'Simple Blog created with NodeJs, Express & MongoDB.'
+        }
+        const {id} = req.params;
+        const data = await postModel.findById(id);
+        res.render('admin/edit-post' ,{
+            locals,
+            data,
+            layout : adminLayout
+        })
+    }catch(error){
+     console.log(error)
+    }
+}
+
+export const updatePostHandler = async(req , res)=>{
+    try{
+        const {id} = req.params;
+       const {title , body} = req.body ; 
+       const post = await postModel.findById(id) ; 
+       post.title = title ; 
+       post.body = body ;
+       await post.save();
+       res.redirect('/dashboard')
+    }catch(error){
+      console.log(error)
+    }
+}
+export const deletePostHandler = async(req , res)=>{
+    try{ 
+     await postModel.deleteOne({_id : req.params.id})
+     res.redirect('/dashboard')
+    }catch(error){
+        console.log(error)
+    }
+}
+
+export const logoutHandler = async(req , res)=>{
+    try{
+        res.clearCookie('token') ;
+        res.redirect('/');
+    }catch(error){
+       console.log(error)
+    }
 }

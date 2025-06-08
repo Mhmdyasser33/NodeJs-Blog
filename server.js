@@ -4,9 +4,12 @@ import express from "express"
 import expressLayout from "express-ejs-layouts";
 import indexFile from "./backend/routes/posts/index.js"
 import adminFile from "./backend/routes/admin/index.js"
+import about from "./backend/routes/about/index.js"
+import contact from "./backend/routes/contact/index.js"
 import connectDB from "./backend/config/dbConnect.js"
 import cookieParser from "cookie-parser"
 import session from "express-session"
+import methodOverride from "method-override"
 import connectMongo from "connect-mongo"
 
 const PORT = 4000 || process.env.PORT
@@ -26,15 +29,15 @@ app.use(session({
         mongoUrl: process.env.MONGO_URI // make session stored in db instead of RMA
     })
 }))
-
+app.use(methodOverride('_method'))
 
 app.use(expressLayout);
 app.set('layout' , './layouts/layout') ; 
 app.set('view engine' , 'ejs');
-
-
 app.use("/",indexFile())
 app.use("/" , adminFile())
+app.use("/",about())
+app.use("/", contact())
 app.listen(PORT , ()=>{
     console.log(`Server are running in port ${PORT}`)
 })

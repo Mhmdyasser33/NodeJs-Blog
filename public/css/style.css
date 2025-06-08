@@ -348,3 +348,20 @@ img {
   opacity: .4;
 
 }
+
+.login__btn{
+  background-color: var(--black);
+  border: none;
+  color: white; 
+  padding: 16px 50px;
+  text-decoration: none;
+  margin: 4px 2px; 
+  cursor: pointer;
+  margin-left: 42%;
+}
+
+.register__msg,
+.login__msg
+{
+  text-align: center;
+}
