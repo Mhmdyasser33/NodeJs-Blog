@@ -4,4 +4,5 @@ const postSchema = mongoose.Schema({
     body :{type : String , required : true},
 },{timestamps : true})
 const postModel = mongoose.model("post", postSchema);
+
 export default postModel;

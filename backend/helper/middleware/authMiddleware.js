@@ -5,7 +5,7 @@ export const authMiddleware = (req, res, next) => {
   try{  
     const decoded = jsonWebToken.verify(token , process.env.JWT_SECRET);
     req.userId = decoded.userId
-    console.log(req.userId)
+    // console.log(req.userId)
     next() ; 
   }catch(error){
     return res.status(401).json({ message: "Unauthorized.!" });

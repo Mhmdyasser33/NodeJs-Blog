@@ -1,5 +1,5 @@
 import postModel from "../models/Post.js";
-
+const adminLayout = '../views/layouts/admin'
  export const getIndex = async(req , res)=>{
     try{
         const locals = {
@@ -69,3 +69,4 @@ export const searchPosts = async(req , res)=>{
         console.log(error);
     }
 }
+  

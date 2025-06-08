@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt" ;
 import jsoWebToken from "jsonwebtoken" 
 import userModel from '../models/user.js'
+import postModel from "../models/Post.js";
 const adminLayout = '../views/layouts/admin'
 export const adminInfo = async(req , res)=>{
     try{
@@ -45,5 +46,49 @@ export const registerHandler = async(req , res)=>{
 
 }
 export const dashboard = async (req, res) => {
-    res.render('admin/dashboard');
+   try{
+       const locals = {
+           title: 'Dashboard',
+           description: 'Simple Blog created with NodeJs, Express & MongoDB.'
+       }
+       const data = await postModel.find({}) ;
+       res.render('admin/dashboard',{
+       locals,
+       layout : adminLayout,
+       data
+       });
+   }catch(error){
+      console.log(error)
+   }
+}
+
+export const displayAddPostPage = async(req , res)=>{
+    try{
+        const locals = {
+            title: 'Add Post',
+            description: 'Simple Blog created with NodeJs, Express & MongoDB.'
+        }
+        const data = await postModel.find({});
+        res.render('admin/add-post' , {
+            locals,
+            data,
+            layout : adminLayout
+        })
+
+    }catch(error){
+     console.log(error)
+    }
+
+}
+
+export const addPostHandler = async(req , res)=>{
+    try{
+        const {title , body } = req.body;
+        const newPost = new postModel({title,body})
+        await postModel.create(newPost) ; 
+        res.redirect('/dashboard') ; 
+    }catch(error){
+        console.log(error)
+    }
+
 }
