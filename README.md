@@ -43,7 +43,7 @@ The application follows MVC architecture with clear separation between public an
 
 ## Database Connection
 
-The application uses a centralized MongoDB connection through Mongoose ODM [1](#0-0) . The connection is established during server startup with proper error handling and logging.
+The application uses a centralized MongoDB connection through Mongoose ODM . The connection is established during server startup with proper error handling and logging.
 
 ### Connection Configuration
 
@@ -91,11 +91,11 @@ The application uses a centralized MongoDB connection through Mongoose ODM [1](#
    npm start
    ```
 
-The server will start on port 4000 [4](#0-3) .
+The server will start on port 4000.
 
 ## Server Configuration
 
-The Express server is configured with a comprehensive middleware stack [5](#0-4) :
+The Express server is configured with a comprehensive middleware stack :
 
 - JSON and URL-encoded body parsing
 - Static file serving from `public/` directory
@@ -115,7 +115,7 @@ The application implements JWT-based authentication for administrative access:
 
 ## Admin Features
 
-The admin dashboard provides comprehensive content management [6](#0-5) :
+The admin dashboard provides comprehensive content management:
 
 - **Dashboard**: Overview of all blog posts
 - **Add Posts**: Create new blog content
@@ -134,17 +134,4 @@ The public blog interface offers:
 
 ## Development
 
-The codebase uses ES6 modules throughout and follows modern JavaScript practices. The database connection is established before server startup to ensure proper initialization order [7](#0-6) .
-
-## Notes
-
-- The application uses EJS templating with layout support for consistent UI
-- Static assets are served from the `public/` directory with CSS and JavaScript files
-- The search functionality includes client-side JavaScript for enhanced user experience
-- All database operations use Mongoose for schema validation and data consistency
-- The session store is configured to use MongoDB for persistence across server restarts
-
-Wiki pages you might want to explore:
-- [Overview (Mhmdyasser33/NodeJs-Blog)](/wiki/Mhmdyasser33/NodeJs-Blog#1)
-- [Database Connection (Mhmdyasser33/NodeJs-Blog)](/wiki/Mhmdyasser33/NodeJs-Blog#2.1)
-- [Data Models and Database (Mhmdyasser33/NodeJs-Blog)](/wiki/Mhmdyasser33/NodeJs-Blog#5)
+The codebase uses ES6 modules throughout and follows modern JavaScript practices. The database connection is established before server startup to ensure proper initialization order.
