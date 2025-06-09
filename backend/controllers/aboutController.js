@@ -1,3 +1,3 @@
 export const aboutItem = (req , res)=>{
-    res.render('../views/about.ejs')
+    return res.render('../views/about.ejs')
 }

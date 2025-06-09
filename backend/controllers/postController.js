@@ -1,6 +1,6 @@
 import postModel from "../models/Post.js";
 const adminLayout = '../views/layouts/admin'
- export const getIndex = async(req , res)=>{
+export const renderHomePage = async(req , res)=>{
     try{
         const locals = {
             title: 'NodeJs Blog',
@@ -23,7 +23,8 @@ const adminLayout = '../views/layouts/admin'
             nextPage : hasNextPage ? nextPage : null,
         });
     }catch(error){
-        console.log(error);
+        console.error("Error loading home page:", error);
+        res.status(500).json({ message: "Internal Server Error"});
     }
 }
 
@@ -37,7 +38,8 @@ export const getPostById = async(req , res)=>{
         }
         return res.render('post' , {locals,data}) ; 
     }catch(error){
-     console.log(`Error in getting postInfo by id ${error}`)
+     console.error(`Error in getting postInfo by id ${error}`)
+     return res.status(500).json({message : "Internal Server Error"}) ;
     }
 }
 
@@ -66,7 +68,8 @@ export const searchPosts = async(req , res)=>{
         })
        
     }catch(error){
-        console.log(error);
+        console.error("Error in Searching:" + error);
+        return res.status(500).json({ message: "Internal Server Error"});
     }
 }
   

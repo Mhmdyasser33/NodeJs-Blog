@@ -3,7 +3,7 @@ import jsoWebToken from "jsonwebtoken"
 import userModel from '../models/user.js'
 import postModel from "../models/Post.js";
 const adminLayout = '../views/layouts/admin'
-export const adminInfo = async(req , res)=>{
+export const showAdminPanel = async(req , res)=>{
     try{
         const locals = {
             title: 'NodeJs Blog',
@@ -11,7 +11,8 @@ export const adminInfo = async(req , res)=>{
         } 
        return res.render('admin/index' , {locals , layout : adminLayout})
     }catch(error){
-        console.log(error)
+        console.error('Error rendering admin page:', error);
+        return res.status(500).json({ message: "Internal Server Error"});
     }
 }
 export const loginHandler = async(req, res)=>{
@@ -27,7 +28,8 @@ export const loginHandler = async(req, res)=>{
         res.cookie('token' , token ,{httpOnly : true});
         res.redirect('/dashboard');
     }catch(error){
-        console.log(error)
+        console.error('Login Error:', error);
+        return res.status(500).json({ message: "Internal Server Error"});
     }
 }
 export const registerHandler = async(req , res)=>{
@@ -41,7 +43,8 @@ export const registerHandler = async(req , res)=>{
         })
       return res.status(201).json({message : 'User created successfully',user}) ; 
     }catch(error){
-     console.log(error) ; 
+     console.error('Error register :'+ error)
+        return res.status(500).json({ message: "Internal Server Error"})
     }
 
 }
@@ -59,10 +62,11 @@ export const displayRegisterPage = (req , res)=>{
         })
         
     }catch(error){
-     console.log(error);
+     console.error("Error in Register Page:"+ error) ; 
+     return res.status(500).json({message : "Internal Server Error"}) ; 
     }
 }
-export const dashboard = async (req, res) => {
+export const getAdminDashboard = async (req, res) => {
    try{
        const locals = {
            title: 'Dashboard',
@@ -75,7 +79,8 @@ export const dashboard = async (req, res) => {
        data
        });
    }catch(error){
-      console.log(error)
+       console.error("Error in dashboard Page:" + error);
+       return res.status(500).json({ message: "Internal Server Error" }); 
    }
 }
 
@@ -93,7 +98,8 @@ export const displayAddPostPage = async(req , res)=>{
         })
 
     }catch(error){
-     console.log(error)
+        console.error("Error in AddPost Page:" + error);
+        return res.status(500).json({ message: "Internal Server Error" }); 
     }
 
 }
@@ -105,7 +111,8 @@ export const addPostHandler = async(req , res)=>{
         await postModel.create(newPost) ; 
         res.redirect('/dashboard') ; 
     }catch(error){
-        console.log(error)
+        console.error("Error in AddPost Page:" + error);
+        return res.status(500).json({ message: "Internal Server Error" }); 
     }
 
 }
@@ -124,7 +131,8 @@ export const displayUpdatePostPage = async(req , res)=>{
             layout : adminLayout
         })
     }catch(error){
-     console.log(error)
+        console.error("Error in UpdatePost Page:" + error);
+        return res.status(500).json({ message: "Internal Server Error" }); 
     }
 }
 
@@ -146,7 +154,8 @@ export const deletePostHandler = async(req , res)=>{
      await postModel.deleteOne({_id : req.params.id})
      res.redirect('/dashboard')
     }catch(error){
-        console.log(error)
+        console.error("Error in DeletePost Page:" + error);
+        return res.status(500).json({ message: "Internal Server Error" }); 
     }
 }
 
@@ -155,6 +164,7 @@ export const logoutHandler = async(req , res)=>{
         res.clearCookie('token') ;
         res.redirect('/');
     }catch(error){
-       console.log(error)
+        console.error("Error in logout:" + error);
+        return res.status(500).json({ message: "Internal Server Error" }); 
     }
 }
